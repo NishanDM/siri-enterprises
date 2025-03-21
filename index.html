@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Siri Enterprises</title>
+  
+
+  
+  <style>
+  /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body and Layout */
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    position: relative;
+    background-color: white; /* fallback color */
+}
+
+/* Adding the background image with opacity using the ::before pseudo-element */
+body::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('siri-logo-1.jpeg');
+    background-repeat: repeat-y;
+    background-size: 100% 70%;
+    opacity: 0.2; /* Adjust opacity here */
+    z-index: -1; /* Ensures it stays behind the content */
+}
+
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    position: fixed;
+    z-index: 1000;
+    top: 0;          /* Aligns it to the top */
+    left: 0;         /* Aligns it to the left */
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .logo a {
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+    padding-left: 1rem;
+  }
+  
+  .navbar .logo img {
+    border-radius: 5px;
+    max-width: 40px;
+    max-height: 40px;
+  }
+
+  .navbar .nav-links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .navbar .nav-links li {
+    margin-left: 20px;
+  }
+  
+  .navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+  
+  .navbar .nav-links a:hover {
+    color: #0df515;
+  }
+  
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+    color: rgb(240, 84, 84);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero h1 {
+    font-size: 4rem;
+  }
+  
+  .hero p {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .cta-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 30px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .cta-btn:hover {
+    background-color: #487bb4;
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Section Styles */
+  .section {
+    padding: 20px 10px;
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  
+#adminLogin {
+  width: 8rem;
+  height: 2rem;
+  border: none;
+  border-radius: 20px;
+  font-size: large;
+  font-weight: bold;
+  font-family: sans-serif;
+  background-color: #14b0cc;
+  color: #fff;
+}
+.imgLogo {
+  max-width: 50px;
+  max-height: 40px;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="siri-logo.jpeg" alt="Logo">
+      <a href="index.html">Siri Enterprises</a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="admin-login.html" target="_blank">
+        <button id="adminLogin">Admin</button>
+    </a></li>
+      <li><a href="pdflist.html">Price-List</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="orders.html">Order</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>Welcome to Siri Enterprises</h1>
+    <p>You can make an order through this website</p>
+    <a href="orders.html" class="cta-btn">Request an order</a>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <h2>About Us</h2>
+    <p>We provide all the kinds of motor bike spare parts. Specially Indian and Japan mortor bikes.</p>
+    <p>You can make any order through this online website.</p>
+    <p>We will deliver your order to your door step as you wish.</p>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="section">
+    <h2>Our Services</h2>
+    <p>Online Delivery</p>
+    <p>Good Products</p>
+    <p>Quick Feedback</p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <p>E mail : sirientp2025@gmail.com</p>
+    <p>Phone : +94 71 772 1450</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Siri Enterprises. All Rights Reserved. Created by Nishan Dhananjaya. </p>
+  </footer>
+
+</body>
+</html>
