@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - View Orders</title>
+    <style>
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: whitesmoke;
+  color: #333;
+  line-height: 1.6;
+  font-size: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.order-title {
+    color: #07770b;
+    font-size: 3.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2%;
+}
+
+    #orderDetails {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        justify-content: center;
+        align-items: center;
+        overflow: scroll;
+        font-size: medium;
+        
+    }
+
+    label {
+        font-weight: bold;
+        font-size: large;
+        color: rgb(49, 49, 49);
+    }
+    .order-item{
+        width: 80%;
+        margin: 0 0;
+        margin-top: 5%;
+        margin-bottom: 50px;
+        justify-self: center;
+        border: 2px solid blue;
+        padding: 2% 2%;
+        border-radius: 10px;
+        font-weight: bold;
+        color: rgb(2, 63, 155);
+    }
+table {
+  width: 90%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: scroll;
+  justify-self: center;
+  margin-bottom: 5%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #94ee8c;
+}
+
+td {
+  transition: all 0.3s ease-in-out;
+}
+
+.close-btn {
+            background: red;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+.view-btn {
+    background: rgb(16, 144, 248);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.del-btn {
+    background: rgb(255, 54, 54);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 5rem;
+    height: 2rem;
+    margin-top: 0.5rem;
+}
+.logout-btn:hover {
+    background-color: #c0392b;
+}
+.logoutbtn-div {
+    margin-right: 5%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    border: transparent;
+    gap: 48rem;
+}
+    </style>
+</head>
+<body>
+    <div class="logoutbtn-div">
+        <h1>Welcome to Admin Page</h1>
+        <button class="logout-btn" onclick="logout()">Log Out</button>
+    </div>
+    <h2 class="order-title">Orders List</h2><br>
+    <div class="order-tableContainer">
+        <table class="ord-table">
+            <thead>
+                <tr>
+                    <th>Invoice No</th>
+                    <th>Invoice Date</th>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
+                    <th>Order Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="ordersTable"></tbody>
+        </table>
+    </div>
+
+    <div id="orderDetails" class="order-details"></div>
+
+    <script>
+        async function fetchOrders() {
+            const response = await fetch("http://localhost:4000/orders");
+            const orders = await response.json();
+            const table = document.getElementById("ordersTable");
+            table.innerHTML = "";
+
+            orders.forEach(order => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${order.customer.invoice_no}</td>
+                    <td>${(order.customer.date).slice(0,9)}</td>
+                    <td>${order.customer.name}</td>
+                    <td>${order.customer.phone}</td>
+                    <td>${order.customer.net_total}</td>
+                    <td>
+                        <button class="view-btn" onclick="viewOrder('${order._id}')">VIEW</button>
+                        <button class="del-btn" onclick="deleteOrder('${order._id}')">DELETE</button>
+                    </td>
+                `;
+                table.prepend(row);
+            });
+        }
+
+    async function viewOrder(orderId) {
+        const response = await fetch(`http://localhost:4000/order/${orderId}`);
+        const order = await response.json();
+        const orderDetailsDiv = document.getElementById("orderDetails");
+
+        // Clear any previous order details
+        orderDetailsDiv.innerHTML = "";
+
+        // Add Customer Info
+        const customerInfo = document.createElement("div");
+        customerInfo.classList.add("order-item");
+        customerInfo.innerHTML = `
+            <label>Invoice No:</label>          ${order.customer.invoice_no}<br>
+            <label>Date:</label>                ${order.customer.date}<br>
+            <label>Customer Name:</label>       ${order.customer.name}<br>
+            <label>Address:</label>             ${order.customer.address}<br>
+            <label>Email:</label>               ${order.customer.email}<br>
+            <label>Phone:</label>               ${order.customer.phone}<br>
+            <label>Payment Type:</label>        ${order.customer.payment_type}<br>
+            <label>Credit Period:</label>       ${order.customer.credit_period}<br>
+            <label>Net Total:</label>           ${order.customer.net_total} <br>
+            <button class="close-btn" onclick="closePopup()">CLOSE</button> 
+        `;
+        orderDetailsDiv.appendChild(customerInfo);
+
+        // Add Items Table
+        const itemsTable = document.createElement("table");
+        itemsTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Item No</th>
+                    <th>Item Code</th>
+                    <th>Description</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${order.items.map(item => `
+                    <tr>
+                        <td>${item.item_no}</td>
+                        <td>${item.item_code}</td>
+                        <td>${item.description}</td>
+                        <td>${item.unit}</td>
+                        <td>${item.price}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.total}</td>
+                    </tr>
+                `).join("")}
+                <tr>
+                    <td colspan="7">
+                       
+                    </td> 
+                </tr>
+            </tbody>
+        `;
+        orderDetailsDiv.appendChild(itemsTable);
+
+        // Show the order details div
+        orderDetailsDiv.style.display = "block";
+    }
+
+        async function deleteOrder(orderId) {
+            if (confirm("Are you sure you want to delete this order?")) {
+                await fetch(`http://localhost:4000/order/${orderId}`, { method: "DELETE" });
+                alert("Order deleted successfully!");
+                fetchOrders(); // Refresh order list
+            }
+        }
+
+        fetchOrders(); // Load orders on page load
+
+        function closePopup() {
+            document.getElementById('orderDetails').style.display = 'none';
+        }
+    
+
+    function checkAuth() {
+        if (localStorage.getItem("adminLoggedIn") !== "true") {
+            window.location.href = "admin-login.html"; // Redirect if not logged in
+        }
+    }
+
+
+    function logout() {
+        localStorage.removeItem("adminLoggedIn"); // Clear login state
+        window.location.href = "admin-login.html"; // Redirect to login page
+    }
+
+    window.onload = function() {
+        checkAuth(); // Check if admin is logged in
+        loadOrders(); // Load orders
+    };
+</script>
+    
+</body>
+</html>

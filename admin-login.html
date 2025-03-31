@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        
+    .login-box {
+        width: 300px;
+        height: 300px;
+        margin: auto auto;
+        border: 2px solid #f31515;
+        border-radius: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+        input { width: 70%; padding: 8px; margin: auto auto;  border: 2px solid rgb(61, 60, 60); border-radius: 1rem;}
+        button { width: 40%; padding: 8px; margin: auto auto; border-radius: 2rem; color: white; background-color: rgb(25, 164, 245); font-size: 1rem; border: none;}
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</div>
+
+<script>
+    function login() {
+        const adminUser = "admin@siri";   // Predefined username
+        const adminPass = "password"; // Predefined password
+
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+
+        if (username === adminUser && password === adminPass) {
+            localStorage.setItem("adminLoggedIn", "true"); // Store login state
+            window.location.href = "admin.html"; // Redirect to admin panel
+        } else {
+            alert("Invalid username or password!");
+        }
+    }
+</script>
+
+</body>
+</html>
