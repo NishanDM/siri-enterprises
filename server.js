@@ -1,6 +1,9 @@
 //-------------STARTING THE JAVASCRIPT FOR INSERTING THE DATA TO THE MONGODB DATABASE----------------------------//
 
-require('dotenv').config({ path: 'mongoURI.env' });
+require('dotenv').config(); // Ensure dotenv is loaded
+
+console.log("MONGO_URI:", process.env.MONGO_URI); // Debugging: See if MONGO_URI is loaded
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -9,10 +12,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {})
+// Ensure MONGO_URI exists before using it
+if (!process.env.MONGO_URI) {
+    console.error("Error: MONGO_URI is not defined. Set it in Render's environment variables.");
+    process.exit(1);
+}
+
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.error("MongoDB Connection Error:", err));
+
 
 // Mongoose Schema
 const OrderSchema = new mongoose.Schema({
