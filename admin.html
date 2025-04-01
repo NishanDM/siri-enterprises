@@ -189,7 +189,7 @@ td {
                 const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${order.customer.invoice_no}</td>
-                    <td>${(order.customer.date).slice(0,9)}</td>
+                    <td>${(order.customer.date).slice(0,8)}</td>
                     <td>${order.customer.name}</td>
                     <td>${order.customer.phone}</td>
                     <td>${order.customer.net_total}</td>
