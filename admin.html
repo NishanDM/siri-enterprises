@@ -168,7 +168,7 @@ td {
                     <th>Invoice Date</th>
                     <th>Customer Name</th>
                     <th>Phone</th>
-                    <th>Order Total</th>
+                    <th>Total Rs.</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -192,7 +192,7 @@ td {
                     <td>${(order.customer.date).slice(0,8)}</td>
                     <td>${order.customer.name}</td>
                     <td>${order.customer.phone}</td>
-                    <td>${order.customer.net_total}</td>
+                    <td>${(order.customer.net_total).slice(3,8)}</td>
                     <td>
                         <button class="view-btn" onclick="viewOrder('${order._id}')">VIEW</button>
                         <button class="del-btn" onclick="deleteOrder('${order._id}')">DELETE</button>
