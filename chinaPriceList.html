@@ -12507,7 +12507,7 @@ async function submitOrder() {
             order_date: new Date()
         };
     
-        const response = await fetch("https://siri-enterprises.onrender.com:10000/order", {
+        const response = await fetch("https://siri-enterprises.onrender.com/order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(order)
