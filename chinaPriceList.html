@@ -12216,7 +12216,7 @@ let invoiceNumberValue = "";
 document.getElementById("submit-btn").addEventListener("click", 
 async function generateInvoice() {
             try {
-                const response = await fetch("https://siri-enterprises.onrender.com:10000/generate-invoice", {
+                const response = await fetch("https://siri-enterprises.onrender.com/generate-invoice", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" }
                 });
