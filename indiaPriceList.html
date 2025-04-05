@@ -40,6 +40,17 @@ body {
     padding-bottom: 12px;
 }
 
+.btnRemove {
+    margin-left: 1rem;
+}
+.btnMin {
+    margin-top: 0.5rem;
+}
+.btnPlus {
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+}
+
 .item-table-container {
 width: 90%; /* Adjust as needed */
 max-height: 400px; /* Set a fixed height */
@@ -251,6 +262,38 @@ select {
     border-radius: 3px;
 }
 
+#okButton {
+    padding: 10px 20px;
+    background-color: #2fb91d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 4rem;
+    margin: auto auto;
+}
+#okButton:hover {
+    background-color: #68cc0b;
+}
+
+#closeBtn {
+    padding: 10px 20px;
+    background-color: #d10606;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 5rem;
+    margin: auto auto;
+}
+
+#closeBtn:hover {
+    background-color: #f14c4c;
+}
+
+
 </style>
 <header>
     <!-- Navbar -->
@@ -277,8 +320,15 @@ select {
             <button class="close-btn" onclick="closePopup()">Close</button>
         </div>
     </div>
-
-    <br><br>
+    <div id="popup2" class="popup">
+        <div class="popup-content" style="margin-top: 15%;">
+            <label for="numberInput">Enter the quantity:</label><br>
+            <input type="number" id="numberInput" value="1" class="numberInput"><br>
+            <button id="okButton" >OK</button><br><button id="closeBtn" >CLOSE</button>
+        </div>
+    </div>
+    <br><br><!-- Popup Message -->
+    <div id="popupAddItem">Item Added ✔</div>
     <div class="priceListName">
         <h1 style="text-align: center; color: rgb(6, 187, 21); ">INDIA PRICE LIST</h1>
     </div><br>
@@ -21490,16 +21540,14 @@ select {
 <table id="buyTable" class="buyItemTable">
 <thead>
 <tr>
-<th>ITEM NO</th>
-<th>ITEM NAME</th>
-<th>ITEM DESCRIPTION</th>
-<th>UNIT</th>
-<th>PRICE</th>
-<th>QTY</th>
-<th>TOTAL</th>
-<th> </th>
-<th> </th>
-<th>Action</th>
+    <th>ITEM NO</th>
+    <th>ITEM CODE</th>
+    <th>ITEM DESCRIPTION</th>
+    <th>UNIT</th>
+    <th>PRICE(Rs.)</th>
+    <th>QTY</th>
+    <th>TOTAL(Rs.)</th>
+    <th>Action</th>
 </tr>
 </thead>
 <tbody>
@@ -21644,60 +21692,64 @@ let creditPeriod;
 
 let buyItems = [];
 let netTotal = 0;
+let inputQtyValue = 1;
 
 // Function to add item to the buy table
 function addItem(button) {
-// Get the row of the clicked button
-const row = button.closest('tr');
+    const row = button.closest('tr');
 
-// Extract data from the row (Code, Name, Price)
-const itemNum = row.cells[0].innerText;
-const itemCode = row.cells[1].innerText;      // itemCode is equel to "ITEM NAME" in table
-const itemDescription = row.cells[2].innerText;
-const itemUnit = row.cells[3].innerText;
-const itemPrice = parseFloat(row.cells[4].innerText.replace('Rs.', ''));
+    const itemNum = row.cells[0].innerText;
+    const itemCode = row.cells[1].innerText;
+    const itemDescription = row.cells[2].innerText;
+    const itemUnit = row.cells[3].innerText;
+    const itemPrice = parseFloat(row.cells[4].innerText.replace('Rs.', ''));
 
-// Check if the item already exists in the buyItems array
-const itemIndex = buyItems.findIndex(item => item.itemNum === itemNum);
+    const itemIndex = buyItems.findIndex(item => item.itemNum === itemNum);
 
-if (itemIndex !== -1) {
-// Item already exists, increase quantity
-buyItems[itemIndex].quantity++;
-buyItems[itemIndex].total = buyItems[itemIndex].quantity * buyItems[itemIndex].itemPrice;
-} else {
-// Item doesn't exist, add new item
-const newItem = {
-itemNum,
-itemCode,     // itemCode is equel to "ITEM NAME" in table
-itemDescription,
-itemUnit,
-itemPrice,
-quantity: 1,
-total: itemPrice
-};
-buyItems.push(newItem);
-}
-netTotal = netTotal + itemPrice;
-updateBuyTable();
+    if (itemIndex !== -1) {
+        buyItems[itemIndex].quantity++;
+        buyItems[itemIndex].total = buyItems[itemIndex].quantity * buyItems[itemIndex].itemPrice;
+    } else {
+        buyItems.push({
+            itemNum,
+            itemCode,
+            itemDescription,
+            itemUnit,
+            itemPrice,
+            quantity: 1,
+            total: itemPrice
+        });
+    }
+
+    netTotal += itemPrice;
+    updateBuyTable();
+    //console.log("The Item is added ✔");
+    let popup = document.getElementById("popupAddItem");
+            popup.style.display = "block";
+
+            // Hide popup after 2 seconds
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 700);
 }
 
 // Function to remove item from the buy table
 function removeItem(itemNum) {
-const itemIndex = buyItems.findIndex(item => item.itemNum === itemNum);
-if (itemIndex !== -1) {
-netTotal = netTotal - (buyItems[itemIndex].quantity * buyItems[itemIndex].itemPrice);
-buyItems.splice(itemIndex, 1);
+    const itemIndex = buyItems.findIndex(item => item.itemNum === itemNum);
+    if (itemIndex !== -1) {
+        netTotal -= buyItems[itemIndex].quantity * buyItems[itemIndex].itemPrice;
+        buyItems.splice(itemIndex, 1);
+    }
+    updateBuyTable();
 }
-updateBuyTable();
-}
-//Function "+" and "-"
+
 // Function to increase quantity
 function increaseQuantity(itemNum) {
     const item = buyItems.find(item => item.itemNum === itemNum);
     if (item) {
         item.quantity++;
         item.total = item.quantity * item.itemPrice;
-        netTotal = netTotal + item.itemPrice;
+        netTotal += item.itemPrice;
         updateBuyTable();
     }
 }
@@ -21709,52 +21761,91 @@ function decreaseQuantity(itemNum) {
         if (buyItems[itemIndex].quantity > 1) {
             buyItems[itemIndex].quantity--;
             buyItems[itemIndex].total = buyItems[itemIndex].quantity * buyItems[itemIndex].itemPrice;
-            netTotal = netTotal - buyItems[itemIndex].itemPrice;
+            netTotal -= buyItems[itemIndex].itemPrice;
         } else {
-            netTotal = netTotal - buyItems[itemIndex].itemPrice;
+            netTotal -= buyItems[itemIndex].itemPrice;
             buyItems.splice(itemIndex, 1);
         }
         updateBuyTable();
     }
 }
 
+// Function to edit quantity manually
+function editQtyManually(itemNum) {
+    document.getElementById("popup2").style.display = "block";
+    const okButton = document.getElementById("okButton");
+    const closeButton = document.getElementById("closeBtn");
+    const inputField = document.getElementById("numberInput");
+
+    // Remove any existing event listener before adding a new one
+    okButton.replaceWith(okButton.cloneNode(true));
+    closeButton.replaceWith(closeButton.cloneNode(true));
+
+    document.getElementById("okButton").addEventListener("click", () => {
+        const item = buyItems.find(item => item.itemNum === itemNum);
+        const newQty = Number(inputField.value);
+
+        if (item && newQty > 0) {
+            netTotal = netTotal - (item.quantity * item.itemPrice) + (newQty * item.itemPrice);
+            item.quantity = newQty;
+            item.total = newQty * item.itemPrice;
+            updateBuyTable();
+        }
+
+        document.getElementById("popup2").style.display = "none";
+    });
+
+    document.getElementById("closeBtn").addEventListener("click", function () {
+        document.getElementById("popup2").style.display = "none";
+    });
+}
+
 // Function to update the buy items table
 function updateBuyTable() {
-const buyTableBody = document.getElementById('buyTable').getElementsByTagName('tbody')[0];
-buyTableBody.innerHTML = ''; // Clear the table body
+    const buyTableBody = document.getElementById('buyTable').getElementsByTagName('tbody')[0];
+    buyTableBody.innerHTML = ''; // Clear the table body
 
-buyItems.forEach(item => {
-const row = buyTableBody.insertRow();
-//Adding the new added item intotop of the table
-buyTableBody.prepend(row);
+    buyItems.forEach(item => {
+        const row = buyTableBody.insertRow();
+        buyTableBody.prepend(row);
 
-row.insertCell(0).textContent = item.itemNum;
-row.insertCell(1).textContent = item.itemCode;     // itemCode is equel to "ITEM NAME" in table
-row.insertCell(2).textContent = item.itemDescription;
-row.insertCell(3).textContent = item.itemUnit;
-row.insertCell(4).textContent = `Rs.${item.itemPrice}`;
-row.insertCell(5).textContent = item.quantity;
-row.insertCell(6).textContent = `Rs.${item.total}`;
-const minusButtonCell = row.insertCell(7);
-const plusButtonCell = row.insertCell(8);
-const removeButtonCell = row.insertCell(9);
-const minusButton = document.createElement('button');
-const plusButton = document.createElement('button');
-const removeButton = document.createElement('button');
-minusButton.textContent = '-';
-plusButton.textContent = '+';
-removeButton.textContent = 'Remove';
-minusButton.classList.add('btnMin');
-plusButton.classList.add('btnPlus');
-removeButton.classList.add('btnRemove');
-minusButton.onclick = () => decreaseQuantity(item.itemNum);
-plusButton.onclick = () => increaseQuantity(item.itemNum);
-removeButton.onclick = () => removeItem(item.itemNum);
-minusButtonCell.appendChild(minusButton);
-plusButtonCell.appendChild(plusButton);
-removeButtonCell.appendChild(removeButton);
-document.getElementById("netTotal").innerText = `Rs.${netTotal}`;
-});
+        row.insertCell(0).textContent = item.itemNum;
+        row.insertCell(1).textContent = item.itemCode;
+        row.insertCell(2).textContent = item.itemDescription;
+        row.insertCell(3).textContent = item.itemUnit;
+        row.insertCell(4).textContent = `${item.itemPrice}`;
+        row.insertCell(5).textContent = item.quantity;
+        row.insertCell(6).textContent = `${item.total}`;
+        
+        const editButtonCell = row.insertCell(7);
+
+        const removeButton = document.createElement('button');
+        const qtyButton = document.createElement('button');
+        const minusButton = document.createElement('button');
+        const plusButton = document.createElement('button');
+
+        qtyButton.textContent = 'Qty';
+        minusButton.textContent = '-';
+        plusButton.textContent = '+';
+        removeButton.textContent = 'Remove';
+
+        minusButton.classList.add('btnMin');
+        plusButton.classList.add('btnPlus');
+        removeButton.classList.add('btnRemove');
+
+        minusButton.onclick = () => decreaseQuantity(item.itemNum);
+        plusButton.onclick = () => increaseQuantity(item.itemNum);
+        removeButton.onclick = () => removeItem(item.itemNum);
+        qtyButton.onclick = () => editQtyManually(item.itemNum);
+
+        editButtonCell.appendChild(qtyButton);
+        editButtonCell.appendChild(removeButton);
+        editButtonCell.appendChild(document.createElement('br'));
+        editButtonCell.appendChild(minusButton);
+        editButtonCell.appendChild(plusButton);
+    });
+
+    document.getElementById("netTotal").innerText = `Rs. ${netTotal.toLocaleString()}.00`;
 }
 
 // Starting search function
