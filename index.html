@@ -1,226 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Siri Enterprises</title>
-  <link rel="icon" href="siri-logo.jpeg" type="image/jpeg">
-
-  
-  <style>
-  /* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body and Layout */
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    position: relative;
-    background-color: white; /* fallback color */
-}
-
-/* Adding the background image with opacity using the ::before pseudo-element */
-body::before {
-    content: "";
-    position: absolute;
-    top: 10%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('siri-logo-1.jpeg');
-    background-repeat: repeat-y;
-    background-size: 100% 70%;
-    opacity: 0.2; /* Adjust opacity here */
-    z-index: -1; /* Ensures it stays behind the content */
-}
-
-  
-  /* Navbar */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 10px 20px;
-    position: fixed;
-    z-index: 1000;
-    top: 0;          /* Aligns it to the top */
-    left: 0;         /* Aligns it to the left */
-    width: 100%;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .navbar .logo a {
-    color: #fff;
-    font-size: 24px;
-    text-decoration: none;
-    padding-left: 1rem;
-  }
-  
-  .navbar .logo img {
-    border-radius: 5px;
-    max-width: 40px;
-    max-height: 40px;
-  }
-
-  .navbar .nav-links {
-    list-style: none;
-    display: flex;
-  }
-  
-  .navbar .nav-links li {
-    margin-left: 20px;
-  }
-  
-  .navbar .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s;
-  }
-  
-  .navbar .nav-links a:hover {
-    color: #0df515;
-  }
-  
-  /* Hero Section */
-  .hero {
-    height: 100vh;
-    background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
-    color: rgb(240, 84, 84);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .hero h1 {
-    font-size: 4rem;
-  }
-  
-  .hero p {
-    font-size: 1.5rem;
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
-  .cta-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 30px;
-    text-decoration: none;
-    font-size: 18px;
-    border-radius: 30px;
-    margin-top: 20px;
-    transition: background-color 0.3s;
-  }
-  
-  .cta-btn:hover {
-    background-color: #487bb4;
-    transform: scale(1.1);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Section Styles */
-  .section {
-    padding: 20px 10px;
-    text-align: center;
-  }
-  
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  /* Footer */
-  footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-  }
-  
-#adminLogin {
-  width: 8rem;
-  height: 2rem;
-  border: none;
-  border-radius: 20px;
-  font-size: large;
-  font-weight: bold;
-  font-family: sans-serif;
-  background-color: #14b0cc;
-  color: #fff;
-}
-.imgLogo {
-  max-width: 50px;
-  max-height: 40px;
-}
-
-  </style>
-</head>
-<body>
-
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">
-      <img src="siri-logo.jpeg" alt="Logo">
-      <a href="index.html">Siri Enterprises</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Siri Enterprises</title>
+    <link rel="icon" href="siri-logo.jpeg" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            animation: {
+              fadeIn: "fadeIn 1.5s ease-in-out",
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="font-sans bg-rose-100 relative animate-fadeIn">
+    <!-- Background Logo -->
+    <div class="absolute inset-x-0 top-20 opacity-10 z-0">
+      <img src="siri-logo-1.jpeg" alt="Background Logo" class="w-full h-[70vh] object-contain" />
     </div>
-    <ul class="nav-links">
-      <li><a href="admin-login.html" target="_blank">
-        <button id="adminLogin">Admin</button>
-    </a></li>
-      <li><a href="pdflist.html">Price-List</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="orders.html">Order</a></li>
-    </ul>
-  </nav>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <h1>Welcome to Siri Enterprises</h1>
-    <p>You can make an order through this website</p>
-    <a href="orders.html" class="cta-btn">Request an order</a>
-  </header>
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center bg-gray-800 text-white px-6 py-4 fixed top-0 left-0 w-full z-50 shadow-lg animate-fadeIn">
+      <div class="flex items-center space-x-3">
+        <img src="siri-logo.jpeg" alt="Logo" class="w-10 h-10 rounded animate-fadeIn" />
+        <a href="index.html" class="text-2xl font-bold">Siri Enterprises</a>
+      </div>
+      <ul class="flex space-x-5 items-center">
+        <li><a href="admin-login.html" target="_blank"><button class="bg-cyan-600 hover:bg-cyan-700 px-4 py-1.5 rounded-full text-white font-semibold">Admin</button></a></li>
+        <li><a href="pdflist.html" class="hover:text-green-400 transition text-white font-semibold">Price-List</a></li>
+        <li><a href="#about" class="hover:text-green-400 transition text-white font-semibold">About</a></li>
+        <li><a href="#services" class="hover:text-green-400 transition text-white font-semibold">Services</a></li>
+        <li><a href="#contact" class="hover:text-green-400 transition text-white font-semibold">Contact</a></li>
+        <li><a href="orders.html" class="hover:text-green-400 transition text-white font-semibold">Order</a></li>
+      </ul>
+    </nav>
 
-  <!-- About Section -->
-  <section id="about" class="section">
-    <h2>About Us</h2>
-    <p>We provide all the kinds of motor bike spare parts. Specially Indian and Japan mortor bikes.</p>
-    <p>You can make any order through this online website.</p>
-    <p>We will deliver your order to your door step as you wish.</p>
-  </section>
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center text-center px-4 bg-gradient-to-r from-rose-300 via-rose-200 to-rose-100 text-red-700 pt-24 animate-fadeIn">
+      
+      <h1 class="text-5xl font-bold mb-4">Welcome to Siri Enterprises</h1>
+      <p class="text-xl font-semibold mb-6">You can make an order through this website</p>
+      <a href="orders.html" class="bg-green-600 hover:bg-blue-600 text-white px-8 py-3 rounded-full text-lg shadow-md transition-transform transform hover:scale-110 text-white font-semibold">Request an order</a>
+    </header>
 
-  <!-- Services Section -->
-  <section id="services" class="section">
-    <h2>Our Services</h2>
-    <p>Online Delivery</p>
-    <p>Good Products</p>
-    <p>Quick Feedback</p>
-  </section>
+    <!-- About Section -->
+    <section id="about" class="py-16 px-4 text-center animate-fadeIn">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">About Us</h2>
+      <div class="max-w-2xl mx-auto text-gray-700 space-y-3">
+        <p>We provide all kinds of motorbike spare parts, especially for Indian and Japanese motorbikes.</p>
+        <p>You can place any order through this online website.</p>
+        <p>We will deliver your order to your doorstep as you wish.</p>
+      </div>
+    </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="section">
-    <h2>Contact Us</h2>
-    <p>E mail : siri.ntp0528@gmail.com</p>
-    <p>Phone : +94 71 772 1450 / +94 78 124 6116 </p>
-  </section>
+     <!-- Services Section -->
+     <section id="services" class="py-16 px-4 text-center bg-rose-200 animate-fadeUp">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">Our Services</h2>
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-10 text-gray-700">
+          <div class="bg-white shadow-md rounded-lg p-6 w-64 mx-auto hover:shadow-2xl transform transition duration-300 hover:scale-105">
+            <h3 class="font-semibold text-lg">Online Delivery</h3>
+          </div>
+          <div class="bg-white shadow-md rounded-lg p-6 w-64 mx-auto hover:shadow-2xl transform transition duration-300 hover:scale-105">
+            <h3 class="font-semibold text-lg">Good Products</h3>
+          </div>
+          <div class="bg-white shadow-md rounded-lg p-6 w-64 mx-auto hover:shadow-2xl transform transition duration-300 hover:scale-105">
+            <h3 class="font-semibold text-lg">Quick Feedback</h3>
+          </div>
+        </div>
+      </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Siri Enterprises. All Rights Reserved. Created by Nishan Dhananjaya. </p>
-  </footer>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4 text-center animate-fadeIn">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">Contact Us</h2>
+      <div class="text-gray-700 space-y-3">
+        <p><strong>Email:</strong> siri.ntp0528@gmail.com</p>
+        <p><strong>Phone:</strong> +94 71 772 1450 / +94 78 124 6116</p>
+      </div>
+    </section>
 
-</body>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 text-center animate-fadeIn">
+      <p>&copy; 2025 Siri Enterprises. All Rights Reserved. Created by Nishan Dhananjaya.</p>
+    </footer>
+  </body>
 </html>
