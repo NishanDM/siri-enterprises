@@ -130,7 +130,7 @@ const transporter = nodemailer.createTransport({
 app.post("/send-email", (req, res) => {
   const mailOptions = {
     from: process.env.GMAIL_USER,
-    to: "nishandm97@gmail.com",
+    to: "siri.ntp0528@gmail.com",
     subject: "New Orde Alert",
     text: "Hello, Kavindu.....\nYou have a new order. Thanks!",
   };
