@@ -12631,7 +12631,26 @@ document.getElementById("printBtn").addEventListener("click", async () => {
         alert("Error occurred.");
       }
     });
-    
+  //--------------------FUNCTION FOR SENDING THE EMAIL----------------------------------
+
+
+document.getElementById("printBtn").addEventListener("click", async () => {
+      try {
+        const response = await fetch("https://siri-enterprises.onrender.com/send-email", {
+          method: "POST",
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert("Email sent!");
+        } else {
+          alert("Failed to send email.");
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Error occurred.");
+      }
+    });  
 </script>
 
 <footer>
