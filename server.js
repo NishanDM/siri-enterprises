@@ -5,11 +5,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
+const nodemailer = require("nodemailer");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static('public'));
 // MongoDB Connection
 const uri = process.env.MONGO_URI;
 const dbName = "SIRI";
@@ -98,13 +99,6 @@ app.post("/order", async (req, res) => {
     }
 });
 
-// Start Server
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-//---------------------THE END-------------------------------------------------//
-
 //-------------STARTING THE JAVASCRIPT FOR VIEWING THE DATA FROM THE MONGODB DATABASE----------------------------//
 
 app.get("/orders", async (req, res) => {
@@ -122,3 +116,37 @@ app.delete("/order/:id", async (req, res) => {
     res.json({ message: "Order deleted successfully!" });
 });
 
+// ------------- FUNCTION FOR SENDING EMAILS------------
+
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
+  },
+});
+
+app.post("/send-email", (req, res) => {
+  const mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: "nishandm97@gmail.com",
+    subject: "New Orde Alert",
+    text: "Hello, Kavindu.....\nYou have a new order. Thanks!",
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log("Error occurred:", error);
+      return res.status(500).json({ success: false, error });
+    }
+    console.log("Email sent:", info.response);
+    res.status(200).json({ success: true, message: "Email sent!" });
+  });
+});
+
+
+// Start Server
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+//---------------------THE END-------------------------------------------------//
